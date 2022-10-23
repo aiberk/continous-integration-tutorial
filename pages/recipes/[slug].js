@@ -37,16 +37,12 @@ export async function getStaticProps({ params }) {
 }
 
 export default function RecipeDetails({ recipe }) {
-  console.log(recipe);
-  // console.log(recipe.fields.imagesOthers[0].fields.file.url);
-  const {
-    title,
-    cookingTime,
-    thumbnail,
-    featuredImage,
-    ingredients,
-    imagesOthers,
-  } = recipe.fields;
+  const temp = recipe.fields.imagesOthers;
+  let imageUrls = [];
+
+  const { title, cookingTime, thumbnail, featuredImage, ingredients } =
+    recipe.fields;
+  //Destructure featuredImage
 
   // const {
   //   0: { fields },
@@ -60,6 +56,10 @@ export default function RecipeDetails({ recipe }) {
   // //   console.log(imagesOthers[i].fields.file.url);
   // //   i++;
   // // }
+  for (let images in temp) {
+    imageUrls.push(temp[images].fields.file.url);
+  }
+  console.log(imageUrls);
 
   return (
     <div>
@@ -80,11 +80,21 @@ export default function RecipeDetails({ recipe }) {
       </div>
 
       <div>
-        <h3>ingredients</h3>
-        <ol>{}</ol>
+        <h3>Others</h3>
+        <ol>
+          {imageUrls.map((url) => {
+            return (
+              <Image
+                src={"https:" + url}
+                width={featuredImage.fields.file.details.image.width}
+                height={featuredImage.fields.file.details.image.height}
+              />
+            );
+          })}
+        </ol>
       </div>
 
-      <div>{imagesOthers[0].fields.file.url}</div>
+      {/* <div>{imagesOthers[0].fields.file.url}</div> */}
     </div>
   );
 }

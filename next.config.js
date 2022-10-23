@@ -4,7 +4,7 @@ module.exports = (phase, { defaultConfig }) => {
    */
   const nextConfig = {
     images: {
-      domains: ["images.ctfassets.net"],
+      domains: ["images.ctfassets.net", "assets.ctfassets.net"],
     },
   };
   return nextConfig;
